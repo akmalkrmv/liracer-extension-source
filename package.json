@@ -1,0 +1,27 @@
+{
+  "name": "lirace",
+  "version": "2.0.0",
+  "description": "Automates collecting unsolved puzzles on Lichess",
+  "license": "ISC",
+  "author": "akmalkrmv",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx scripts/watch.js",
+    "build": "tsx scripts/build.js",
+    "build:background": "esbuild src/background/index.ts --bundle --outfile=build/background/index.js --platform=browser",
+    "watch:background": "esbuild src/background/index.ts --bundle --outfile=build/background/index.js --platform=browser --watch",
+    "build:content": "esbuild src/content/**/*.ts --bundle --outdir=build/content --platform=browser",
+    "watch:content": "esbuild src/content/**/*.ts --bundle --outdir=build/content --platform=browser --watch",
+    "build:popup": "cd src/popup && npm run build -- --output-path=../../build/popup",
+    "watch:popup": "cd src/popup && npm run build -- --output-path=../../build/popup --watch"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.1.32",
+    "@types/node": "^25.0.3",
+    "concurrently": "^9.2.1",
+    "esbuild": "^0.27.2",
+    "sass": "^1.97.2",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}
