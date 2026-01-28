@@ -1,0 +1,7 @@
+@if (filtered(); as groups) {
+  @for (group of groups; track group.timestamp) {
+    <app-storm-group-card [value]="group" />
+  } @empty {
+    <div class="card">No runs found</div>
+  }
+}

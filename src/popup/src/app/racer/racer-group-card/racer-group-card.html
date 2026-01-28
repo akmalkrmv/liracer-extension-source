@@ -1,0 +1,13 @@
+@if (value(); as group) {
+  <div class="race-run-card">
+    <app-racer-group-card-header [value]="group" />
+
+    @if (filter().viewMode === 'all') {
+      <app-racer-card [run]="combine(group)" [combined]="true" />
+    } @else {
+      @for (race of group.runs; track $index) {
+        <app-racer-card [run]="race" />
+      }
+    }
+  </div>
+}

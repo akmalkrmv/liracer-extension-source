@@ -1,0 +1,35 @@
+.card-navigation-tabs {
+  margin-block: var(--space-lg);
+  margin-bottom: calc(var(--space-md) * -1);
+  margin-inline-start: var(--space-md);
+
+  button {
+    border: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-inline-end: var(--space-xs);
+    background-color: var(--bg);
+
+    &.active,
+    &:hover {
+      background-color: var(--bg-light);
+    }
+  }
+
+  /* & + .card {
+    border-top-left-radius: 0;
+  } */
+}
+
+.chart-container {
+  margin-block: var(--space-lg);
+
+  p {
+    margin-block-end: var(--space-sm);
+
+    .subheader {
+      color: var(--text-muted);
+      font-size: 0.9em;
+    }
+  }
+}

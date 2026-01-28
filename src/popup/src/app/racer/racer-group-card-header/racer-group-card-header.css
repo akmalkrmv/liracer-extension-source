@@ -1,0 +1,37 @@
+.flex-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-block: 1rem;
+  margin-block: var(--space-sm);
+
+  &.align-top {
+    align-items: flex-start;
+  }
+  &.align-bottom {
+    align-items: flex-end;
+  }
+
+  & > :last-child {
+    min-width: 12ch;
+    text-align: end;
+  }
+}
+
+.header-row {
+  margin-block-start: var(--space-lg);
+  h3 {
+    margin: 0;
+
+    & > span {
+      text-transform: lowercase;
+      font-weight: normal;
+      color: var(--text-muted);
+    }
+  }
+}
+
+.subheader {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}

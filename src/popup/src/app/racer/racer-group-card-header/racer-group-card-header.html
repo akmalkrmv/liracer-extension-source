@@ -1,0 +1,114 @@
+@if (value(); as group) {
+  <div class="date-group-header">
+    <div>
+      <h3 class="date-group-label">
+        {{ group.label }}
+        <span>
+          • <b>{{ group.runs.length }}</b> run{{ group.runs.length > 1 ? 's' : '' }}
+        </span>
+      </h3>
+      <div class="date-group-stats-container">
+        <div class="time-stat">
+          <span class="date-group-stat">
+            <b>{{ group.timestamp | date: 'shortDate' }}</b>
+          </span>
+          <span class="badge copy-stats-badge" (click)="copyStats(group)">copy stats</span>
+        </div>
+        <div>
+          <span class="date-group-stat">
+            High score: <b>{{ group.metric.score.max }}</b>
+          </span>
+          <span class="date-group-stat">
+            Avg. score: <b>{{ group.metric.score.average }}</b>
+          </span>
+        </div>
+        <div>
+          <span class="date-group-stat">
+            Avg. solves: <b>{{ group.metric.solved.average }}</b>
+          </span>
+          <span class="date-group-stat">
+            Avg. fails: <b>{{ group.metric.fails.average }}</b>
+          </span>
+        </div>
+        <div>
+          <span class="date-group-stat">
+            High rank: <b>{{ group.metric.rank.min }}</b>
+          </span>
+          <span class="date-group-stat">
+            Avg. rank: <b>{{ group.metric.rank.average }}</b>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="card-actions">
+      <app-train-button type="racer" [group]="group" />
+      <div class="badges-container">
+        @if (settings().racer.showSolvedBadges) {
+          <span class="badge solved-badge">{{ group.metric.solved.total }}</span>
+        }
+        <span class="badge unsolved-badge">{{ group.metric.unsolved.total }}</span>
+        <span class="badge reviewed-badge">{{ group.metric.reviewed.total }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- header -->
+  <!-- <div class="header-row flex-row align-bottom">
+    <h3 class="">
+      {{ group.label }}
+      <span>
+        • <b>{{ group.runs.length }}</b> run{{ group.runs.length > 1 ? 's' : '' }}
+      </span>
+    </h3>
+
+    <app-train-button type="racer" [group]="group" />
+  </div> -->
+
+  <!-- sub header -->
+  <!-- <div class="flex-row">
+    <div class="time-stat subheader">
+      <span class="date-group-stat">
+        <b>{{ group.timestamp | date: 'shortDate' }}</b>
+      </span>
+    </div>
+
+    <div class="badges-container">
+      <span class="badge solved-badge">{{ group.stats.totalSolved }}</span>
+      <span class="badge unsolved-badge">{{ group.stats.totalUnsolved }}</span>
+      <span class="badge reviewed-badge">{{ group.stats.totalReviewed }}</span>
+    </div>
+  </div> -->
+
+  <!-- stats -->
+  <!-- <div class="flex-row align-top">
+    <div class="date-group-stats-container">
+      <div>
+        <span class="date-group-stat">
+          High score: <b>{{ group.stats.highScore }}</b>
+        </span>
+        <span class="date-group-stat">
+          Avg. score: <b>{{ group.stats.avgScore }}</b>
+        </span>
+      </div>
+      <div>
+        <span class="date-group-stat">
+          Avg. solves: <b>{{ group.stats.avgSolved }}</b>
+        </span>
+        <span class="date-group-stat">
+          Avg. fails: <b>{{ group.stats.avgFailed }}</b>
+        </span>
+      </div>
+      <div>
+        <span class="date-group-stat">
+          High rank: <b>{{ group.stats.highRank }}</b>
+        </span>
+        <span class="date-group-stat">
+          Avg. rank: <b>{{ group.stats.avgRank }}</b>
+        </span>
+      </div>
+    </div>
+    <div>
+      <span class="badge copy-stats-badge" (click)="copyStats(group)">copy stats</span>
+    </div>
+  </div> -->
+}

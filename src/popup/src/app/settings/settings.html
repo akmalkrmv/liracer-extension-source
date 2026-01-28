@@ -1,0 +1,96 @@
+@if (settings(); as settings) {
+  <div class="card">
+    <h3>Appearance</h3>
+    <div class="settings-group">
+      <label>Theme</label>
+      <div class="flex">
+        <label class="radio-label">
+          <input type="radio" name="theme" value="system" [checked]="settings.theme === 'system'" (change)="setSetting('theme', 'system')" />
+          <span>System</span>
+        </label>
+        <label class="radio-label">
+          <input type="radio" name="theme" value="light" [checked]="settings.theme === 'light'" (change)="setSetting('theme', 'light')" />
+          <span>Light</span>
+        </label>
+        <label class="radio-label">
+          <input type="radio" name="theme" value="dark" [checked]="settings.theme === 'dark'" (change)="setSetting('theme', 'dark')" />
+          <span>Dark</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="settings-group">
+      <label>Mode</label>
+      <div class="flex">
+        <label class="radio-label">
+          <input type="radio" name="viewMode" value="popup" [checked]="settings.viewMode === 'popup'" (change)="setSetting('viewMode', 'popup')" />
+          <span>Popup</span>
+        </label>
+        <label class="radio-label">
+          <input type="radio" name="viewMode" value="panel" [checked]="settings.viewMode === 'panel'" (change)="setSetting('viewMode', 'panel')" />
+          <span>Panel</span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Racer</h3>
+    <div class="settings-group">
+      <label>Show solved badges</label>
+      <div class="flex">
+        <label class="radio-label">
+          <input type="radio" name="racer.showSolvedBadges" [checked]="settings.racer.showSolvedBadges" (change)="setSetting('racer.showSolvedBadges', true)" />
+          <span>Show</span>
+        </label>
+        <label class="radio-label">
+          <input type="radio" name="racer.showSolvedBadges" [checked]="!settings.racer.showSolvedBadges" (change)="setSetting('racer.showSolvedBadges', false)" />
+          <span>Hide</span>
+        </label>
+      </div>
+    </div>
+    <div class="settings-group">
+      <label>Show solved puzzles</label>
+      <div class="flex">
+        <label class="radio-label">
+          <input type="radio" name="racer.showSolvedPuzzles" [checked]="settings.racer.showSolvedPuzzles" (change)="setSetting('racer.showSolvedPuzzles', true)" />
+          <span>Show</span>
+        </label>
+        <label class="radio-label">
+          <input type="radio" name="racer.showSolvedPuzzles" [checked]="!settings.racer.showSolvedPuzzles" (change)="setSetting('racer.showSolvedPuzzles', false)" />
+          <span>Hide</span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Storm</h3>
+    <div class="settings-group">
+      <label>Show solved badges</label>
+      <div class="flex">
+        <label class="radio-label">
+          <input type="radio" name="storm.showSolvedBadges" [checked]="settings.storm.showSolvedBadges" (change)="setSetting('storm.showSolvedBadges', true)" />
+          <span>Show</span>
+        </label>
+        <label class="radio-label">
+          <input type="radio" name="storm.showSolvedBadges" [checked]="!settings.storm.showSolvedBadges" (change)="setSetting('storm.showSolvedBadges', false)" />
+          <span>Hide</span>
+        </label>
+      </div>
+    </div>
+    <div class="settings-group">
+      <label>Show solved puzzles</label>
+      <div class="flex">
+        <label class="radio-label">
+          <input type="radio" name="storm.showSolvedPuzzles" [checked]="settings.storm.showSolvedPuzzles" (change)="setSetting('storm.showSolvedPuzzles', true)" />
+          <span>Show</span>
+        </label>
+        <label class="radio-label">
+          <input type="radio" name="storm.showSolvedPuzzles" [checked]="!settings.storm.showSolvedPuzzles" (change)="setSetting('storm.showSolvedPuzzles', false)" />
+          <span>Hide</span>
+        </label>
+      </div>
+    </div>
+  </div>
+}

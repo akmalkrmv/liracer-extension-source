@@ -1,0 +1,29 @@
+<div class="card">
+  <h3>Backup</h3>
+
+  <p style="color: var(--text-muted)">Export your data to a JSON file or restore it from a previous backup.</p>
+
+  <div class="action-buttons">
+    <button class="btn" (click)="exportData()" [disabled]="isExporting()" title="Click to export your data"><mat-icon>download</mat-icon> Download</button>
+    <button class="btn" (click)="importData()" [disabled]="isImporting()" title="Click to import your data"><mat-icon>upload</mat-icon> Restore</button>
+  </div>
+
+  <!-- @if (exportStatus(); as status) {
+    <p class="status">{{ status }}</p>
+  } -->
+
+  @if (importStatus(); as status) {
+    <p class="status">{{ status }}</p>
+  }
+</div>
+
+<!-- <div class="card">
+  <h3>Export data</h3>
+  <p style="color: var(--text-muted)">
+    Click the button below to export all your data as a JSON file. This includes your races, storms, and any other saved information. The file will be downloaded to your computer.
+  </p>
+  <h3>Import Data</h3>
+  <p style="color: var(--text-muted)">
+    Click the button below to import data from a JSON file. You can restore previously exported data, including races, storms, and other settings.
+  </p>
+</div> -->

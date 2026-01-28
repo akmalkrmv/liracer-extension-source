@@ -1,0 +1,29 @@
+@if (tabs(); as tabs) {
+  <div class="card-navigation-tabs">
+    @for (tab of tabs; track $index) {
+      <button class="btn" [class.active]="selected() === tab" (click)="selected.set(tab)">{{ tab.title }}</button>
+    }
+  </div>
+
+  @for (tab of tabs; track $index) {
+    @if (selected() === tab) {
+      <div class="card">
+        <h3>{{ tab.header }}</h3>
+
+        @if (tab.sections; as sections) {
+          @for (section of sections; track $index) {
+            <div class="chart-container">
+              <p>
+                {{ section.header }}
+                @if (section.subheader) {
+                  <span class="subheader"> • {{ section.subheader }}</span>
+                }
+              </p>
+              <app-line-chart [data]="{ labels: section.labels, datasets: section.datasets }" />
+            </div>
+          }
+        }
+      </div>
+    }
+  }
+}

@@ -1,0 +1,31 @@
+@if (value(); as run) {
+  <div class="summary-row">
+    <div class="summary-row-title">
+      @if (combined()) {
+        <div>All puzzles</div>
+      } @else {
+        <div>
+          <span>
+            Race:
+            <a target="_blank" [href]="prependUrl(raceLinkPrefix, run.raceId)">#{{ run.raceId }}</a>
+          </span>
+          <span class="summary-row-time"> • {{ run.timestamp | relativeDate: 'MMM d, h:mm a E' }} </span>
+        </div>
+        <span class="summary-row-stats">
+          Score: <b>{{ run.score }}</b> • Rank:
+          <b>
+            <span class="rank">{{ run.rank }}</span
+            >/{{ run.totalPlayers }}
+          </b>
+        </span>
+      }
+    </div>
+    <span class="badges">
+      @if (settings().racer.showSolvedBadges) {
+        <span class="badge solved-badge">{{ run.solved.length }}</span>
+      }
+      <span class="badge unsolved-badge">{{ run.unsolved.length }}</span>
+      <span class="badge reviewed-badge">{{ run.reviewed.length }}</span>
+    </span>
+  </div>
+}

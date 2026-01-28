@@ -1,0 +1,19 @@
+/* Run Info */
+.run-info {
+  background: var(--bg);
+  padding: var(--space-sm);
+  border-radius: var(--border-radius-sm);
+  margin-block: var(--space-md);
+  border-left: 2px solid var(--highlight);
+}
+
+.run-info p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.run-info strong {
+  font-weight: 600;
+  color: var(--text);
+}

@@ -1,0 +1,19 @@
+.mat-expansion-panel {
+  padding: 0;
+  margin-bottom: var(--space-sm);
+  background-color: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius);
+
+  border-color: var(--unsolved-color);
+  border-color: hsl(from var(--unsolved-color) h s l / 0.7);
+
+  &[data-unsolved='0'] {
+    border-color: var(--solved-color);
+    border-color: hsl(from var(--solved-color) h s l / 0.7);
+  }
+
+  .mat-expansion-panel-header {
+    padding: var(--space-xs) var(--space-md);
+  }
+}

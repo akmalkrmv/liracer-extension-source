@@ -1,0 +1,7 @@
+@if (filtered(); as groups) {
+  @for (group of groups; track $index) {
+    <app-racer-group-card [value]="group" [filter]="filter()" />
+  } @empty {
+    <div class="card">No runs found</div>
+  }
+}

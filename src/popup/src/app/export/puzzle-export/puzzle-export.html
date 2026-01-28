@@ -1,0 +1,102 @@
+<div class="puzzle-export-container">
+  <!-- Tabs for Racer/Storm Selection -->
+  <div class="card-navigation-tabs">
+    <button class="btn" [class.active]="runType() === 'racer'" (click)="selectRunType('racer')">Racer</button>
+    <button class="btn" [class.active]="runType() === 'storm'" (click)="selectRunType('storm')">Storm</button>
+  </div>
+
+  <div class="export-section">
+    <h3>Export Unsolved Puzzles</h3>
+
+    <!-- Date Range Filter -->
+    <app-range-filter [(value)]="dateRange" [compact]="true" />
+
+    <!-- Run Count Display -->
+    <div class="run-info">
+      <p>
+        Selected Runs: <strong>{{ filteredRuns().length }}</strong> | Unsolved Puzzles: <strong>{{ unsolvedCount() }}</strong>
+      </p>
+    </div>
+
+    <!-- Statistics Toggle -->
+    <div class="control-group checkbox">
+      <input id="includeStats" type="checkbox" [(ngModel)]="includeStats" class="checkbox-input" />
+      <label for="includeStats" class="checkbox-label">Include Statistics</label>
+    </div>
+
+    <!-- Granular Statistics Selection -->
+    @if (includeStats()) {
+      <div class="statistics-options">
+        @for (stat of getFilteredStats(); track stat.key) {
+          <div class="stat-option">
+            <div class="stat-name">
+              <input
+                type="checkbox"
+                [checked]="statisticsSelection()[stat.key]!.enabled"
+                (change)="updateStatMetric(stat.key, 'enabled', $event.target.checked)"
+                class="stat-checkbox"
+                [id]="stat.key"
+              />
+              <label [for]="stat.key">{{ stat.label }}</label>
+            </div>
+            <div class="stat-metrics">
+              <div>
+                <input
+                  type="checkbox"
+                  class="metric-checkbox"
+                  [id]="stat.key + '-max'"
+                  [checked]="statisticsSelection()[stat.key]!.max"
+                  [disabled]="!statisticsSelection()[stat.key]!.enabled"
+                  (change)="updateStatMetric(stat.key, 'max', $event.target.checked)"
+                />
+                <label [for]="stat.key + '-max'">High</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  class="metric-checkbox"
+                  [id]="stat.key + '-avg'"
+                  [checked]="statisticsSelection()[stat.key]!.average"
+                  [disabled]="!statisticsSelection()[stat.key]!.enabled"
+                  (change)="updateStatMetric(stat.key, 'average', $event.target.checked)"
+                />
+                <label [for]="stat.key + '-avg'">Avg</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  class="metric-checkbox"
+                  [id]="stat.key + '-min'"
+                  [checked]="statisticsSelection()[stat.key]!.min"
+                  [disabled]="!statisticsSelection()[stat.key]!.enabled"
+                  (change)="updateStatMetric(stat.key, 'min', $event.target.checked)"
+                />
+                <label [for]="stat.key + '-min'">Low</label>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- Preview Section -->
+    <div class="preview-section">
+      <div class="preview-title">Preview</div>
+      <div class="preview-box">
+        <pre>{{ previewContent() }}</pre>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <button (click)="copyToClipboard()" class="btn btn-primary">
+        <mat-icon>content_copy</mat-icon>
+        <span>Copy to Clipboard</span>
+      </button>
+      <button (click)="downloadAsFile()" class="btn">
+        <mat-icon>download</mat-icon>
+        <span>Download File</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+section {
+  display: flex;
+  align-items: center;
+}
+
+.example-label {
+  font-size: 14px;
+  margin: 0 16px 0 8px;
+  min-width: 120px;
+}
+
+.example-button-row {
+  max-width: 600px;
+}
+
+.example-button-row .mat-mdc-button-base,
+.example-button-row [maticonbutton] {
+  margin: 8px 8px 8px 0;
+}
+
+.example-flex-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.custom-example {
+  .mat-divider {
+    visibility: hidden;
+    margin-block: 0.4rem;
+  }
+
+  .example-flex-container {
+    gap: var(--space-sm);
+    justify-content: start;
+  }
+
+  /* .mat-mdc-button-base {
+     margin: 8px 8px 8px 0; 
+  } */
+}

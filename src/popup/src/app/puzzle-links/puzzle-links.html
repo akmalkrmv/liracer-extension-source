@@ -1,0 +1,15 @@
+<div>
+  <span>{{ label() }}</span>
+  <span class="badge copy-links-badge" (click)="copyLinks()">copy links</span>
+</div>
+
+@for (link of links(); track $index) {
+  <a external [class]="linkClass()" [href]="link">
+    {{ link }}
+    @if (currentTabUrl() === link) {
+      <span class="badge current-badge">current</span>
+    }
+  </a>
+} @empty {
+  None
+}

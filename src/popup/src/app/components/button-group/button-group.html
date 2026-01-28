@@ -1,0 +1,10 @@
+<div class="button-group">
+  @for (option of options(); track option.value) {
+    <button class="btn btn-sm" [class.active]="option.value === selectedValue()" (click)="selectOption(option.value)">
+      @if (option.icon) {
+        <mat-icon>{{ option.icon }}</mat-icon>
+      }
+      {{ option.label }}
+    </button>
+  }
+</div>

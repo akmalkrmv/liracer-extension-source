@@ -1,0 +1,50 @@
+@if (value(); as run) {
+  <div class="summary-row">
+    <div class="summary-row-title">
+      @if (combined()) {
+        <div>All puzzles</div>
+      } @else if (isRacer(run)) {
+        <ng-content [ngTemplateOutlet]="racerCardSummary" [ngTemplateOutletContext]="{$implicit: run}"></ng-content>
+      } @else if (isStorm(run)) {
+        <ng-content [ngTemplateOutlet]="stormCardSummary" [ngTemplateOutletContext]="{$implicit: run}"></ng-content>
+      }
+    </div>
+    <span class="badges">
+      @if (settings().racer.showSolvedBadges) {
+        <span class="badge solved-badge">{{ run.solved.length }}</span>
+      }
+      <span class="badge unsolved-badge">{{ run.unsolved.length }}</span>
+      <span class="badge reviewed-badge">{{ run.reviewed.length }}</span>
+    </span>
+  </div>
+}
+
+
+<ng-template #racerCardSummary let-run>
+  <div>
+    <span>Race: <a target="_blank" [href]="prependUrl(linkPrefix(), run.raceId)">#{{ run.raceId }}</a></span>
+    <span class="summary-row-time"> • {{ run.timestamp | relativeDate: 'MMM d, h:mm a E' }} </span>
+  </div>
+  <!-- Stats -->
+  <span class="summary-row-stats">
+    Score: <b>{{ run.score }}</b> • Rank: <b><span class="rank">{{ run.rank }}</span>/{{ run.totalPlayers }}</b>
+  </span>
+</ng-template>
+
+
+<ng-template #stormCardSummary let-run>
+  <span class="summary-row-subtitle">
+    Storm: <a target="_blank" href="https://lichess.org/storm">#{{ run.stormId }}</a>
+    <span class="summary-row-time"> • {{ run.timestamp | relativeDate }}</span>
+  </span>
+  <!-- Stats -->
+  <span class="summary-row-stats">
+    <span>Score: <b>{{ run.score }}</b></span>
+    <span>Moves: <b>{{ run.moves }}</b></span>
+    <span>Time: <b>{{ run.time }}</b>s</span>
+    <span>Highest solved: <b>{{ run.highestSolved }}</b></span>
+    <!-- <span>Time per move: <b>{{ storm.timePerMove }}</b>s</span>
+    <span>Combo: <b>{{ storm.combo }}</b></span>
+    <span>Accuracy: <b>{{ storm.accuracy }}</b>%</span> -->
+  </span>
+</ng-template>

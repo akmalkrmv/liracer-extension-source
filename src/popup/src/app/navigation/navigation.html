@@ -1,0 +1,18 @@
+<nav class="tabs-nav">
+  @for (item of tabs; track $index) {
+    <button
+      class="tab-btn"
+      [attr.data-tab]="item"
+      [class.active]="selected() === item.section"
+      (click)="selectTab(item)"
+    >
+      @if (item.icon) {
+        <mat-icon>{{ item.icon }}</mat-icon>
+      }
+
+      @if (item.label) {
+        {{ item.label }}
+      }
+    </button>
+  }
+</nav>

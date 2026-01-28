@@ -1,0 +1,13 @@
+@if (value(); as run) {
+  <details [attr.data-race-id]="getId(run)" [attr.data-unsolved]="run.unsolved.length" [open]="isOpen()" (toggle)="toggleDetails($event, run)">
+    <summary app-run-card-summary [run]="run" [combined]="combined()" linkPrefix=""></summary>
+
+    <div class="links">
+      <app-puzzle-links label="Unsolved" [puzzleIds]="run.unsolved" [prefix]="trainingLinkPrefix" linkClass="unsolved" />
+      <app-puzzle-links label="Reviewed" [puzzleIds]="run.reviewed" [prefix]="trainingLinkPrefix" linkClass="reviewed" />
+      @if (settings().racer.showSolvedPuzzles) {
+        <app-puzzle-links label="Solved" [puzzleIds]="run.solved" [prefix]="trainingLinkPrefix" linkClass="solved" />
+      }
+    </div>
+  </details>
+}

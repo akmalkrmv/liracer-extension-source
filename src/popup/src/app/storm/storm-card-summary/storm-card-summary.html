@@ -1,0 +1,32 @@
+@if (value(); as storm) {
+  <div class="summary-row">
+    <div class="summary-row-title">
+      <span class="summary-row-subtitle">
+        Storm: <a target="_blank" href="https://lichess.org/storm">#{{ storm.stormId }}</a>
+        <!-- <mat-icon>tornado</mat-icon> <a target="_blank" href="https://lichess.org/storm">#{{ storm.stormId }}</a> -->
+        <!-- <span class="summary-row-time"> • Dec 1, 03:21 PM</span> -->
+        <span class="summary-row-time"> • {{ storm.timestamp | relativeDate }}</span>
+      </span>
+
+      <span class="summary-row-stats">
+        <!-- <mat-icon>{{getRandomGrowthIcon()}}</mat-icon>  -->
+        <span>Score: <b>{{ storm.score }}</b></span>
+        <span>Moves: <b>{{ storm.moves }}</b></span>
+        <span>Time: <b>{{ storm.time }}</b>s</span>
+        <span>Highest solved: <b>{{ storm.highestSolved }}</b></span>
+        <!-- 
+        <span>Time per move: <b>{{ storm.timePerMove }}</b>s</span>
+        <span>Combo: <b>{{ storm.combo }}</b></span>
+        <span>Accuracy: <b>{{ storm.accuracy }}</b>%</span> 
+        -->
+      </span>
+    </div>
+    <span class="badges">
+      @if (settings().storm.showSolvedBadges) {
+        <span class="badge solved-badge">{{ storm.solved.length }}</span>
+      }
+      <span class="badge unsolved-badge">{{ storm.unsolved.length }}</span>
+      <span class="badge reviewed-badge">{{ storm.reviewed.length }}</span>
+    </span>
+  </div>
+}

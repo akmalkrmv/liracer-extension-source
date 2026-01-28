@@ -1,0 +1,48 @@
+@if (value(); as group) {
+  <div class="date-group-header">
+    <div class="">
+      <h3 class="date-group-label">
+        {{ group.label }}
+        <span>
+          • <b>{{ group.runs.length }}</b> run{{ group.runs.length > 1 ? 's' : '' }}
+        </span>
+      </h3>
+      <div class="date-group-stats-container">
+        <div class="time-stat">
+          <!-- <span class="date-group-stat"><b>12/01/2025</b></span> -->
+          <span class="date-group-stat">
+            <b>{{ group.timestamp | date: 'shortDate' }}</b>
+          </span>
+          <span class="badge copy-stats-badge" (click)="copyStats(group)">copy stats</span>
+        </div>
+        <div>
+          <span class="date-group-stat">
+            High score: <b>{{ group.metric.score.max }}</b>
+          </span>
+          <span class="date-group-stat">
+            Avg. score: <b>{{ group.metric.score.nonZeroAverage }}</b>
+          </span>
+        </div>
+        <div>
+          <span class="date-group-stat">
+            Avg. solves: <b>{{ group.metric.solved.average }}</b>
+          </span>
+          <span class="date-group-stat">
+            Avg. fails: <b>{{ group.metric.fails.average }}</b>
+          </span>
+        </div>
+        <div></div>
+      </div>
+    </div>
+    <div class="card-actions">
+      <app-train-button type="storm" [group]="group" />
+      <div class="badges-container">
+        @if(settings().storm.showSolvedBadges) {
+          <span class="badge solved-badge">{{ group.metric.solved.total }}</span>
+        }
+        <span class="badge unsolved-badge">{{ group.metric.unsolved.total }}</span>
+        <span class="badge reviewed-badge">{{ group.metric.reviewed.total }}</span>
+      </div>
+    </div>
+  </div>
+}

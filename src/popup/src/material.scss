@@ -1,0 +1,94 @@
+// Include theming for Angular Material with `mat.theme()`.
+// This Sass mixin will define CSS variables that are used for styling Angular Material
+// components according to the Material 3 design spec.
+// Learn more about theming and how to use it for your application's
+// custom components at https://material.angular.dev/guide/theming
+@use '@angular/material' as mat;
+
+:root {
+  --mat-sys-corner-none: 0;
+  --mat-sys-corner-small: 2px;
+  --mat-sys-corner-medium: 4px;
+  --mat-sys-corner-large: 6px;
+
+  --mat-fab-container-shape: 4px;
+  --mat-fab-small-container-shape: 2px;
+  --mat-fab-medium-container-shape: 4px;
+  --mat-fab-large-container-shape: 6px;
+  --mat-fab-extended-container-shape: 6px;
+
+  // --mat-button-text-label-text-color: var(--text);
+}
+
+html {
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      density: 0,
+    )
+  );
+
+  @include mat.snack-bar-overrides(
+    (
+      button-color: var(--bg),
+      container-color: var(--text),
+    )
+  );
+
+  --button-radius: 4px;
+
+  // Override button shape
+  $button-theme: (
+    // container-shape: var(--button-radius),
+    // small-container-shape: var(--button-radius),
+    // extended-container-shape: var(--button-radius),
+    container-color: var(--highlight) // container-color: green
+  );
+
+  $button-overrides: (
+    // container-shape: var(--button-radius),
+    // small-container-shape: var(--button-radius),
+    // extended-container-shape: var(--button-radius),
+    filled-container-shape: var(--button-radius),
+    // filled-container-color: red,
+     // filled-container-color: var(--highlight)
+  );
+
+  @include mat.button-theme($button-theme);
+  @include mat.button-overrides($button-overrides);
+
+  @include mat.fab-theme($button-theme);
+  @include mat.fab-overrides($button-theme);
+
+  .mat-icon.material-symbols-outlined {
+    vertical-align: middle;
+    line-height: 1;
+  }
+
+  .material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-size: 24px;
+    font-variation-settings:
+      'FILL' 1,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 48;
+  }
+}
+
+// body {
+//   // Default the application to a light color theme. This can be changed to
+//   // `dark` to enable the dark color theme, or to `light dark` to defer to the
+//   // user's system settings.
+//   color-scheme: light dark;
+
+//   // Set a default background, font and text colors for the application using
+//   // Angular Material's system-level CSS variables. Learn more about these
+//   // variables at https://material.angular.dev/guide/system-variables
+//   background-color: var(--mat-sys-surface);
+//   color: var(--mat-sys-on-surface);
+//   font: var(--mat-sys-body-medium);
+// }

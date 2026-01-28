@@ -1,0 +1,7 @@
+@if (value(); as storm) {
+  <div class="links">
+    <app-puzzle-links label="Unsolved" [puzzleIds]="storm.unsolved" [prefix]="trainingLinkPrefix" linkClass="unsolved" />
+    <app-puzzle-links label="Reviewed" [puzzleIds]="storm.reviewed" [prefix]="trainingLinkPrefix" linkClass="reviewed" />
+    <app-puzzle-links label="Solved" [puzzleIds]="storm.solved" [prefix]="trainingLinkPrefix" linkClass="solved" />
+  </div>
+}

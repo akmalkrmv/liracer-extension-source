@@ -1,0 +1,13 @@
+@if (value(); as storm) {
+  <details [attr.data-storm-id]="storm.stormId" [attr.data-unsolved]="storm.unsolved.length" [open]="isOpen()" (toggle)="toggleDetails($event, storm)">
+    <summary app-storm-card-summary [value]="storm"></summary>
+
+    <div class="links">
+      <app-puzzle-links label="Unsolved" [puzzleIds]="storm.unsolved" [prefix]="trainingLinkPrefix" linkClass="unsolved" />
+      <app-puzzle-links label="Reviewed" [puzzleIds]="storm.reviewed" [prefix]="trainingLinkPrefix" linkClass="reviewed" />
+      @if (settings().storm.showSolvedPuzzles) {
+        <app-puzzle-links label="Solved" [puzzleIds]="storm.solved" [prefix]="trainingLinkPrefix" linkClass="solved" />
+      }
+    </div>
+  </details>
+}

@@ -1,0 +1,14 @@
+@if (value(); as run) {
+  <!-- [attr.data-has-duplicates]="hasDuplicates(run.unsolved)" -->
+  <details [attr.data-race-id]="run.raceId" [attr.data-unsolved]="run.unsolved.length" [open]="isOpen()" (toggle)="toggleDetails($event, run)">
+    <summary app-racer-card-summary [run]="run" [combined]="combined()"></summary>
+
+    <div class="links">
+      <app-puzzle-links label="Unsolved" [puzzleIds]="run.unsolved" [prefix]="trainingLinkPrefix" linkClass="unsolved" />
+      <app-puzzle-links label="Reviewed" [puzzleIds]="run.reviewed" [prefix]="trainingLinkPrefix" linkClass="reviewed" />
+      @if (settings().racer.showSolvedPuzzles) {
+        <app-puzzle-links label="Solved" [puzzleIds]="run.solved" [prefix]="trainingLinkPrefix" linkClass="solved" />
+      }
+    </div>
+  </details>
+}
