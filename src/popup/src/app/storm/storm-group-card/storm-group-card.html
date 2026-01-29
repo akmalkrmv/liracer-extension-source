@@ -2,8 +2,12 @@
   <div class="race-run-card">
     <app-storm-group-card-header [value]="group" />
 
-    @for (storm of group.runs; track $index) {
-      <app-storm-card [value]="storm" />
+    @if (filter().viewMode === 'all') {
+      <app-storm-card [value]="combine(group)" [combined]="true" />
+    } @else {
+      @for (storm of group.runs; track $index) {
+        <app-storm-card [value]="storm" />
+      }
     }
   </div>
 }

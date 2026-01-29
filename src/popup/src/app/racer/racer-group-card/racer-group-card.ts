@@ -15,26 +15,22 @@ export class RacerGroupCard {
   public readonly value: InputSignal<IGroupedRace> = input.required<IGroupedRace>();
   public readonly filter: InputSignal<IRacerFilter> = input.required<IRacerFilter>();
 
-  combine(group: IGroupedRace): IRace {
+  protected combine(group: IGroupedRace): IRace {
     const uniqueKey: string = String(group.timestamp);
     const combined = new Race(uniqueKey);
 
-    let allSolved: PuzzleId[] = [];
-    let allUnsolved: PuzzleId[] = [];
-    let allReviewed: PuzzleId[] = [];
+    let solved: PuzzleId[] = [];
+    let unsolved: PuzzleId[] = [];
+    let reviewed: PuzzleId[] = [];
 
     group.runs.forEach((run: IRace) => {
-      allSolved = [...new Set([...allSolved, ...run.solved])]; // Combine and remove duplicates
-      allUnsolved = [...new Set([...allUnsolved, ...run.unsolved])];
-      allReviewed = [...new Set([...allReviewed, ...run.reviewed])];
+      solved = [...new Set([...solved, ...run.solved])]; // Combine and remove duplicates
+      unsolved = [...new Set([...unsolved, ...run.unsolved])];
+      reviewed = [...new Set([...reviewed, ...run.reviewed])];
     });
 
     // Set puzzles
-    combined.setPuzzles({
-      solved: allSolved,
-      unsolved: allUnsolved,
-      reviewed: allReviewed,
-    });
+    combined.setPuzzles({ solved, unsolved, reviewed });
 
     return combined;
   }

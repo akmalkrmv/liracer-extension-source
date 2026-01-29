@@ -1,5 +1,5 @@
 import { Component, input, InputSignal, model, ModelSignal } from '@angular/core';
-import { DateRange, DATE_RANGES, DateRangeValue } from '../services/datetime/date.service';
+import { DateRange, DATE_RANGES, DateRangeValue } from '../models';
 
 @Component({
   selector: 'app-range-filter',

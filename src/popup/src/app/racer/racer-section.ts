@@ -2,9 +2,8 @@ import { Component, computed, inject, Signal, WritableSignal } from '@angular/co
 import { RacerFilter } from './racer-filter/racer-filter';
 import { RacerGroup } from './racer-group/racer-group';
 import { IRace } from '@extension/shared/models';
-import { IGroupedRace } from '../models';
-import { IRacerFilter } from '../models/racer-filter.model';
-import { DateService, DateRange } from '../services/datetime/date.service';
+import { IGroupedRace, DateRange, IRacerFilter } from '../models';
+import { DateService } from '../services/datetime/date.service';
 import { RacerService } from '../services/racer/racer.service';
 import { LoadMore } from '../actions/load-more/load-more';
 

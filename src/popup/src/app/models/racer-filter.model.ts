@@ -1,7 +1,5 @@
-import { DateRange } from '../services/datetime/date.service';
-
-export type TViewMode = 'all' | 'grouped' | undefined;
-export type TGroupByFilter = 'relative' | 'date' | 'day-name' | undefined;
+import { DateRange } from './date-range.model';
+import { TGroupByFilter, TViewMode } from './run-filter.model';
 
 export interface IRacerFilter {
   dateRange: DateRange;

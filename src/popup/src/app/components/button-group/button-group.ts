@@ -1,8 +1,8 @@
 import { Component, input, InputSignal, output, OutputEmitterRef } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
-export interface ButtonOption {
-  value: string;
+export interface ButtonOption<T> {
+  value: T;
   label: string;
   icon?: string;
 }
@@ -12,12 +12,12 @@ export interface ButtonOption {
   imports: [MatIconModule],
   templateUrl: './button-group.html',
 })
-export class ButtonGroupComponent {
-  public readonly options: InputSignal<ButtonOption[]> = input.required<ButtonOption[]>();
-  public readonly selectedValue: InputSignal<string> = input.required<string>();
-  public readonly valueChanged: OutputEmitterRef<string> = output<string>();
+export class ButtonGroupComponent<T> {
+  public readonly options: InputSignal<ButtonOption<T>[]> = input.required<ButtonOption<T>[]>();
+  public readonly selectedValue: InputSignal<T | undefined> = input<T>();
+  public readonly valueChanged: OutputEmitterRef<T> = output<T>();
 
-  public selectOption(value: string): void {
+  public selectOption(value: T): void {
     this.valueChanged.emit(value);
   }
 }

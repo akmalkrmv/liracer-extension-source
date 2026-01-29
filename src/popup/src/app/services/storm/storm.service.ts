@@ -10,10 +10,16 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { STORAGE_KEYS, StorageKey } from '@extension/shared/consts';
 import { IStorm } from '@extension/shared/models';
-import { IGroupedStorm } from '../../models';
+import { IGroupedStorm, IGroupingConfig, IStormFilter } from '../../models';
 import { RunGroupingService } from '../run-grouping.service';
 import { IStorageAdapter, STORAGE_ADAPTER } from '../storage';
 import { StormStatCalculator } from '../stats-calculator';
+
+const DEFAULT_FILTERS: IStormFilter = {
+  dateRange: 'all',
+  groupBy: 'relative',
+  viewMode: 'grouped',
+};
 
 @Injectable({ providedIn: 'root' })
 export class StormService {
@@ -25,6 +31,10 @@ export class StormService {
 
   public readonly storms: WritableSignal<IStorm[]> = signal<IStorm[]>([]);
   public readonly groups: Signal<IGroupedStorm[]> = computed(() => this.grouped(this.storms()));
+  public readonly filter: WritableSignal<IStormFilter> = signal<IStormFilter>(DEFAULT_FILTERS);
+  public readonly config: Signal<IGroupingConfig> = computed<IGroupingConfig>(() =>
+    this.getConfig(this.filter()),
+  );
 
   constructor() {
     this.storage
@@ -47,6 +57,13 @@ export class StormService {
   }
 
   private grouped(storms: IStorm[]): IGroupedStorm[] {
-    return this.grouping.groupRunsByDate(storms, this.calculator) as IGroupedStorm[];
+    return this.grouping.groupRunsByDate(storms, this.calculator, this.config()) as IGroupedStorm[];
+  }
+
+  private getConfig(filter: IStormFilter): IGroupingConfig {
+    return {
+      strategy: filter.groupBy === 'date' ? 'date' : 'relative',
+      labeling: filter.groupBy === 'date' ? 'date' : 'relative',
+    };
   }
 }

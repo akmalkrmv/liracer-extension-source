@@ -1,66 +1,55 @@
 import { Component, model, ModelSignal } from '@angular/core';
-import { DateRange } from '../../services/datetime/date.service';
 import { RangeFilter } from '../../range-filter/range-filter';
-import { IRacerFilter, TGroupByFilter, TViewMode } from '../../models/racer-filter.model';
-import { MatIconModule } from '@angular/material/icon';
+import { TGroupByFilter, TViewMode, IRacerFilter, DateRange } from '../../models';
+import { ButtonGroupComponent, ButtonOption } from '../../components/button-group/button-group';
 
 @Component({
   selector: 'app-racer-filter',
-  imports: [RangeFilter, MatIconModule],
+  imports: [RangeFilter, ButtonGroupComponent],
   template: `
-    <app-range-filter [value]="filter().dateRange" (valueChange)="updateRange($event)" />
-    <div class="flex-row space-between">
-      <div class="button-group">
-        <button
-          class="btn btn-sm"
-          (click)="updateGroupBy('relative')"
-          [class.active]="filter().groupBy === 'relative'"
-        >
-          Relative
-        </button>
-        <button
-          class="btn btn-sm"
-          (click)="updateGroupBy('date')"
-          [class.active]="filter().groupBy === 'date'"
-        >
-          Days
-        </button>
+    @if (filter(); as filter) {
+      <app-range-filter
+        [compact]="true"
+        [value]="filter.dateRange"
+        (valueChange)="updateRange($event)"
+      />
+      <div class="flex-row space-between">
+        <app-button-group
+          [options]="groupByOptions"
+          [selectedValue]="filter.groupBy"
+          (valueChanged)="updateGroupBy($event)"
+        />
+        <app-button-group
+          [options]="viewModeOptions"
+          [selectedValue]="filter.viewMode"
+          (valueChanged)="updateViewMode($event)"
+        />
       </div>
-
-      <div class="button-group">
-        <button
-          class="btn btn-sm"
-          (click)="updateViewMode('grouped')"
-          [class.active]="filter().viewMode === 'grouped'"
-        >
-          <mat-icon>view_agenda</mat-icon>
-          Grouped
-        </button>
-        <button
-          class="btn btn-sm"
-          (click)="updateViewMode('all')"
-          [class.active]="filter().viewMode === 'all'"
-        >
-          <mat-icon>view_list</mat-icon>
-          Combined
-        </button>
-      </div>
-    </div>
+    }
   `,
   styles: ``,
 })
 export class RacerFilter {
   public readonly filter: ModelSignal<IRacerFilter> = model.required<IRacerFilter>();
 
-  public updateRange(dateRange: DateRange) {
+  protected readonly groupByOptions: ButtonOption<TGroupByFilter>[] = [
+    { value: 'relative', label: 'Relative', icon: 'label' },
+    { value: 'date', label: 'Days', icon: 'calendar_month' },
+  ];
+  protected readonly viewModeOptions: ButtonOption<TViewMode>[] = [
+    { value: 'grouped', label: 'Grouped', icon: 'view_agenda' },
+    { value: 'all', label: 'Combined', icon: 'view_list' },
+  ];
+
+  protected updateRange(dateRange: DateRange) {
     this.filter.update((value: IRacerFilter) => ({ ...value, dateRange }));
   }
 
-  public updateGroupBy(groupBy: TGroupByFilter) {
+  protected updateGroupBy(groupBy: TGroupByFilter) {
     this.filter.update((value: IRacerFilter) => ({ ...value, groupBy }));
   }
 
-  public updateViewMode(viewMode: TViewMode) {
+  protected updateViewMode(viewMode: TViewMode) {
     this.filter.update((value: IRacerFilter) => ({ ...value, viewMode }));
   }
 }

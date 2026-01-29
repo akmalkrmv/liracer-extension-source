@@ -21,10 +21,11 @@ import { SettingsService } from '../../services/settings.service';
   `,
 })
 export class StormCardSummary {
-  public readonly value: InputSignal<IStorm> = input.required<IStorm>();
-
   protected readonly settingsService: SettingsService = inject(SettingsService);
   protected readonly settings: Signal<ISettings> = this.settingsService.settings;
+
+  public readonly value: InputSignal<IStorm> = input.required<IStorm>();
+  public readonly combined: InputSignal<boolean> = input<boolean>(false);
 
   getRandomGrowthIcon() {
     return Math.random() > 0.5 ? 'north_east' : 'north_west';

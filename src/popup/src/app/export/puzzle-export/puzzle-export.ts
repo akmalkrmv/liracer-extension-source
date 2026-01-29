@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { IRace, IStorm } from '@extension/shared/models';
 import { RangeFilter } from '../../range-filter/range-filter';
 import { ClipboardService } from '../../services/clipboard.service';
-import { DateService, DateRange } from '../../services/datetime/date.service';
+import { DateService } from '../../services/datetime/date.service';
 import { DownloadService } from '../../services/download.service';
 import { RacerService } from '../../services/racer';
 import { SnackbarManager } from '../../services/snackbar.service';
@@ -13,6 +13,7 @@ import { StormService } from '../../services/storm';
 import { STAT_DEFINITIONS, DEFAULT_RACER_STATS, DEFAULT_STORM_STATS } from './consts';
 import { StatDefinition, StatisticsSelection, StatMetricOptions } from './models';
 import { PuzzleExportService } from './services/puzzle-export.service';
+import { DateRange } from '../../models';
 
 const EXPORT_MESSAGES = {
   NOTHING_TO_COPY: 'Nothing to copy',

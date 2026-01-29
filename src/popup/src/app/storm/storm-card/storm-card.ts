@@ -28,6 +28,7 @@ export class StormCard {
   private readonly settingsService: SettingsService = inject(SettingsService);
 
   public readonly value: InputSignal<IStorm> = input.required<IStorm>();
+  public readonly combined: InputSignal<boolean> = input<boolean>(false);
 
   readonly trainingLinkPrefix: string = LINKS.TRAINING;
   readonly opens: WritableSignal<TOpenRaces> = signal<TOpenRaces>({});

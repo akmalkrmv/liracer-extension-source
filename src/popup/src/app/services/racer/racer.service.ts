@@ -31,11 +31,11 @@ export class RacerService {
   private readonly calculator: RacerStatsCalculator = new RacerStatsCalculator();
 
   public readonly races: WritableSignal<IRace[]> = signal<IRace[]>([]);
+  public readonly groups: Signal<IGroupedRace[]> = computed(() => this.grouped(this.races()));
   public readonly filter: WritableSignal<IRacerFilter> = signal<IRacerFilter>(DEFAULT_FILTERS);
   public readonly config: Signal<IGroupingConfig> = computed<IGroupingConfig>(() =>
     this.getConfig(this.filter()),
   );
-  public readonly groups: Signal<IGroupedRace[]> = computed(() => this.grouped(this.races()));
 
   constructor() {
     this.storage

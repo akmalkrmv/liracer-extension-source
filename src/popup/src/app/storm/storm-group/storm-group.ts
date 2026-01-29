@@ -1,5 +1,5 @@
 import { Component, input, InputSignal } from '@angular/core';
-import { IGroupedStorm } from '../../models';
+import { IGroupedStorm, IStormFilter } from '../../models';
 import { StormGroupCard } from '../storm-group-card/storm-group-card';
 
 @Component({
@@ -10,4 +10,5 @@ import { StormGroupCard } from '../storm-group-card/storm-group-card';
 })
 export class StormGroup {
   public readonly filtered: InputSignal<IGroupedStorm[]> = input.required<IGroupedStorm[]>();
+  public readonly filter: InputSignal<IStormFilter> = input.required<IStormFilter>();
 }
