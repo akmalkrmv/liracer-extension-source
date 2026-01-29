@@ -1,45 +1,21 @@
 import { Component, inject, input, InputSignal, WritableSignal } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
-import {
-  PuzzleId,
-  IRace,
-  IStorm,
-  TrainingGroupType,
-  TrainingGroup,
-} from '@extension/shared/models';
+import { LINKS } from '@extension/shared/consts';
+import { PuzzleId, TrainingGroupType, TrainingGroup } from '@extension/shared/models';
+import { IRun, IGroupedRace, IGroupedStorm } from '../../models';
 import { TrainingService } from '../../services/training.service';
-import { IGroupedRace, IGroupedStorm } from '../../models';
-import { MatButton } from '@angular/material/button';
+import { LinkHandlerService } from '../../services/link-handler.service';
+import { sum } from '../../services/utils';
 
 @Component({
   selector: 'app-train-button',
   imports: [MatIcon],
   templateUrl: './train-button.html',
-  styles: `
-    button {
-      width: 100%;
-      /*
-       display: flex;
-       align-items: center;
-       justify-content: center;
-
-       background-color: var(--solved-color) !important;
-       border-color: var(--solved-color) !important;
-
-       text-transform: uppercase;
-
-       mat-icon {
-         --size: 0.9rem;
-
-         height: var(--size);
-         font-size: var(--size);
-         line-height: var(--size);
-       }*/
-    }
-  `,
+  styleUrl: './train-button.css',
 })
 export class TrainButton {
   private readonly trainingService: TrainingService = inject(TrainingService);
+  private readonly linkHandler: LinkHandlerService = inject(LinkHandlerService);
 
   public readonly type: InputSignal<TrainingGroupType> = input.required();
   public readonly group: InputSignal<IGroupedRace | IGroupedStorm> = input.required();
@@ -47,12 +23,20 @@ export class TrainButton {
   protected readonly currentTrainingGroup: WritableSignal<TrainingGroup | null> =
     this.trainingService.currentTrainingGroup;
 
-  startTraining(group: IGroupedRace | IGroupedStorm) {
-    const puzzles: PuzzleId[] = group.runs.flatMap((run: IRace | IStorm) => run.unsolved);
+  public startTraining(group: IGroupedRace | IGroupedStorm) {
+    const puzzles: PuzzleId[] = group.runs.flatMap((run: IRun) => run.unsolved);
+    const lastPuzzleId: PuzzleId | undefined = puzzles[puzzles.length - 1];
+
     this.trainingService.setPuzzlesForTraining(this.type(), group.timestamp, puzzles);
+    this.linkHandler.navigate(`${LINKS.TRAINING}${lastPuzzleId}`, false);
   }
 
-  stopTraining() {
+  public stopTraining() {
     this.trainingService.clearTraining();
+  }
+
+  public isTrainingAvailable(group: IGroupedRace | IGroupedStorm): boolean {
+    const unsolvedCounts: number[] = group?.runs?.flatMap((run: IRun) => run.unsolved.length);
+    return sum(unsolvedCounts) > 0;
   }
 }

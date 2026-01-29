@@ -1,5 +1,5 @@
 import { Component, computed, input, InputSignal, Signal } from '@angular/core';
-import { IRun } from '../run.model';
+import { IRun } from '../../models/run.model';
 import { sum } from '../../services/utils';
 
 @Component({

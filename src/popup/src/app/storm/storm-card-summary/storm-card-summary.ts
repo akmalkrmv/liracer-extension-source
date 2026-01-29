@@ -25,7 +25,7 @@ export class StormCardSummary {
 
   protected readonly settingsService: SettingsService = inject(SettingsService);
   protected readonly settings: Signal<ISettings> = this.settingsService.settings;
-  
+
   getRandomGrowthIcon() {
     return Math.random() > 0.5 ? 'north_east' : 'north_west';
   }

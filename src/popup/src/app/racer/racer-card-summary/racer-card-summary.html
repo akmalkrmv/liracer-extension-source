@@ -6,8 +6,8 @@
       } @else {
         <div>
           <span>
-            Race:
-            <a target="_blank" [href]="prependUrl(raceLinkPrefix, run.raceId)">#{{ run.raceId }}</a>
+            <!-- Race: <a target="_blank" [href]="prependUrl(raceLinkPrefix, run.raceId)">#{{ run.raceId }}</a> -->
+            Race: <span class="summary-row-id">#{{ run.raceId }}</span>
           </span>
           <span class="summary-row-time"> • {{ run.timestamp | relativeDate: 'MMM d, h:mm a E' }} </span>
         </div>

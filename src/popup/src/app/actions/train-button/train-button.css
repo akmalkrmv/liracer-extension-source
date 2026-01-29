@@ -1,0 +1,20 @@
+button {
+  width: 100%;
+
+  /* display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: var(--solved-color) !important;
+  border-color: var(--solved-color) !important;
+
+  text-transform: uppercase;
+
+  mat-icon {
+    --size: 0.9rem;
+
+    height: var(--size);
+    font-size: var(--size);
+    line-height: var(--size);
+  } */
+}

@@ -1,16 +1,28 @@
-import { inject, Injectable, signal, WritableSignal } from '@angular/core';
+import { DestroyRef, inject, Injectable, signal, WritableSignal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { STORAGE_KEYS, StorageKey } from '@extension/shared/consts';
 import { PuzzleId, TrainingGroup, TrainingGroupType } from '@extension/shared/models';
-import { STORAGE_KEYS } from '@extension/shared/consts';
 import { IStorageAdapter, STORAGE_ADAPTER } from './storage';
 
 @Injectable({ providedIn: 'root' })
 export class TrainingService {
   private readonly storage: IStorageAdapter = inject(STORAGE_ADAPTER);
+  private readonly destroyRef: DestroyRef = inject(DestroyRef);
+  private readonly reloadKeys: Set<StorageKey> = new Set<StorageKey>([STORAGE_KEYS.TRAINING]);
 
   public readonly currentTrainingGroup: WritableSignal<TrainingGroup | null> =
     signal<TrainingGroup | null>(null);
 
   constructor() {
+    this.storage
+      .onKeysChanged(this.reloadKeys)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.setup());
+
+    this.setup();
+  }
+
+  public setup() {
     this.getPuzzlesForTraining().then((group: TrainingGroup | null) => {
       this.currentTrainingGroup.set(group);
     });

@@ -25,7 +25,7 @@ import { Version } from './components/version';
   template: `
     <div class="popup-container">
       <header class="popup-header">
-        <h1>Lichess Puzzle Tracker</h1>
+        <h1>LiRacer - Lichess Puzzle Tracker</h1>
       </header>
       <app-navigation [(selected)]="navigation" />
       <main class="tabs-content">

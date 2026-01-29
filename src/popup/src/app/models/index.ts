@@ -1,5 +1,6 @@
 export * from './navigation-section.model';
 
+export * from './run.model';
 export * from './grouping.model';
 export * from './metric-summary.model';
 export * from './metric-series.model';

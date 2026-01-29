@@ -187,6 +187,10 @@ summary::-webkit-details-marker {
   justify-content: space-between;
 }
 
+.summary-row-id {
+  color: var(--text-muted);
+}
+
 .summary-row-time {
   color: var(--text-muted);
   font-size: 0.8rem;

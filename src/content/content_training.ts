@@ -1,85 +1,30 @@
 // Example href link of single puzzle
 // https://lichess.org/training/Iy8iI
 
+import {STORAGE_KEYS} from '../shared/consts';
 import {MessageTypes} from '../shared/messages';
-import {Race, PuzzleId} from '../shared/models';
-import {PUZZLE_FEEDBACK_SUCCESS_SELECTOR, PUZZLE_FEEDBACK_NEXT_SELECTOR} from '../shared/ui/selectors';
+import {PuzzleId} from '../shared/models';
+import {attachCustomStylesIntoDocumentHead, appendNextUnsolvedLink} from '../shared/ui/training-page-helpers';
+import {PUZZLE_FEEDBACK_SELECTOR, PUZZLE_FEEDBACK_SUCCESS_SELECTOR} from '../shared/ui/selectors';
 
-type RacesRecord = Record<string, Race>;
 type PuzzleLink = string | undefined;
-type TrainingGroup = {type: 'racer' | 'storm', date: number, puzzles: string[]}
+type TrainingGroup = {type: 'racer' | 'storm'; date: number; puzzles: string[]};
 
 (function () {
-  const PUZZLE_TRAINING = 'https://lichess.org/training';
+  const extractLastSegment = (href: string) => href.split('/').filter(Boolean).pop()!;
 
   // Extract puzzle ID (last path segment)
-  const puzzleId: PuzzleId | undefined = location.pathname.split('/').pop(); // e.g. "Iy8iI"
+  const puzzleId: PuzzleId | undefined = extractLastSegment(location.pathname); // e.g. "Iy8iI"
+
+  // Attach styles
+  attachCustomStylesIntoDocumentHead();
 
   // Observe dynamic DOM
   const observer = new MutationObserver(() => checkIfPuzzleSolved());
   observer.observe(document.body, {childList: true, subtree: true});
 
-  const DATE_RANGES = {
-    today: {label: 'Today', offset: 0},
-    yesterday: {label: 'Yesterday', offset: 1},
-    week: {label: 'Last 7 days', offset: 7},
-    month: {label: 'Last 30 days', offset: 30},
-    all: {label: 'All time', offset: Infinity},
-  } as const;
-
-  type DateRange = keyof typeof DATE_RANGES;
-
-  function getDateRangeFilter(range: DateRange) {
-    const offset = DATE_RANGES[range]?.offset;
-    if (offset === undefined) return null;
-
-    // Create today at midnight
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    // Calculate cutoff date at midnight
-    const cutoffDate = new Date(today);
-    cutoffDate.setDate(cutoffDate.getDate() - offset);
-
-    return (timestamp: number) => {
-      if (offset === Infinity) return true;
-      const raceDate = new Date(timestamp);
-      raceDate.setHours(0, 0, 0, 0);
-      return raceDate >= cutoffDate;
-    };
-  }
-
-  function filterUnsolvedPuzzles(races: RacesRecord, range: DateRange) {
-    const filter = getDateRangeFilter(range);
-    if (!filter) return [];
-
-    const puzzles: string[] = [];
-    Object.values(races).forEach((race) => {
-      if (filter(race.timestamp) && race.unsolved) {
-        puzzles.push(...race.unsolved);
-      }
-    });
-
-    // Remove duplicates
-    return [...new Set(puzzles)];
-  }
-
-  function prependPathIfNeeded(path: string, puzzleLinkOrId: string) {
-    return puzzleLinkOrId.startsWith(path) ? puzzleLinkOrId : `${path}/${puzzleLinkOrId}`;
-  }
-
-  function appendNextUnsolvedLink(container: Element, puzzleLink: PuzzleLink, count: number) {
-    if (!container) return;
-    if (!puzzleLink) return;
-
-    const link: HTMLAnchorElement = document.createElement('a');
-    link.href = prependPathIfNeeded(PUZZLE_TRAINING, puzzleLink);
-    link.textContent = `Next Unsolved (${count})`;
-    container.appendChild(link);
-  }
-
-  function checkIfPuzzleSolved() {
-    const isPuzzleSolved = document.querySelector(PUZZLE_FEEDBACK_SUCCESS_SELECTOR);
+  function checkIfPuzzleSolved(): void {
+    const isPuzzleSolved: Element | null = document.querySelector(PUZZLE_FEEDBACK_SUCCESS_SELECTOR);
     if (!isPuzzleSolved) return;
 
     chrome.runtime.sendMessage({type: MessageTypes.puzzle_solved_single, id: puzzleId});
@@ -87,29 +32,16 @@ type TrainingGroup = {type: 'racer' | 'storm', date: number, puzzles: string[]}
     // Optional: auto-close puzzle tab after solving
     // chrome.runtime.sendMessage({ type: "close_tab" });
 
-    const nextPuzzleContainer = document.querySelector(PUZZLE_FEEDBACK_NEXT_SELECTOR);
+    const nextPuzzleContainer: Element | null = document.querySelector(PUZZLE_FEEDBACK_SELECTOR);
     if (!nextPuzzleContainer) return;
 
-    // Old version: trains only current day puzzles
-    // chrome.storage.local.get(['races'], (data) => {
-    //   const races: RacesRecord = (data.races as RacesRecord) || {};
-    //   const unsolvedPuzzles: PuzzleLink[] = filterUnsolvedPuzzles(races, 'today')
-    //     .map((link: string) => link.split('/').pop())
-    //     .filter((id: PuzzleLink) => id !== puzzleId);
+    // Handle puzzles that got into training
+    chrome.storage.local.get([STORAGE_KEYS.TRAINING], (data) => {
+      const training = data[STORAGE_KEYS.TRAINING] as TrainingGroup | undefined;
+      if (!training?.puzzles?.length) return;
 
-    //   if (!unsolvedPuzzles?.length) return;
-
-    //   const remaining: number = unsolvedPuzzles.length;
-    //   const nextUnsolvedPuzzleLink: PuzzleLink = unsolvedPuzzles.pop();
-
-    //   appendNextUnsolvedLink(nextPuzzleContainer, nextUnsolvedPuzzleLink, remaining);
-    // });
-
-    // New version: trains puzzles that got into training
-    chrome.storage.local.get(['training'], (data) => {
-      const training: TrainingGroup = (data.training as TrainingGroup) || {};
       const unsolvedPuzzles: PuzzleLink[] = training.puzzles
-        .map((link: string) => link.split('/').pop())
+        .map((link: string) => extractLastSegment(link)) // map to puzzle id
         .filter((id: PuzzleLink) => id !== puzzleId);
 
       if (!unsolvedPuzzles?.length) return;

@@ -16,13 +16,13 @@ export class LinkHandlerService {
       });
 
       // URL changed in same tab
-      // chrome.tabs.onUpdated.addListener(
-      //   (tabId: number, changeInfo: chrome.tabs.OnUpdatedInfo, tab: chrome.tabs.Tab) => {
-      //     if (changeInfo.url) {
-      //       this.currentTabUrl.set(tab.url || '');
-      //     }
-      //   },
-      // );
+      chrome.tabs.onUpdated.addListener(
+        (tabId: number, changeInfo: chrome.tabs.OnUpdatedInfo, tab: chrome.tabs.Tab) => {
+          if (changeInfo.url) {
+            this.currentTabUrl.set(tab.url || '');
+          }
+        },
+      );
     }
   }
 

@@ -2,7 +2,7 @@ import { Component, inject, input, InputSignal, Signal } from '@angular/core';
 import { IRace, ISettings, IStorm } from '@extension/shared/models';
 import { RelativeDatePipe } from '../../pipes/relative-date-pipe';
 import { SettingsService } from '../../services/settings.service';
-import { IRun } from '../run.model';
+import { IRun } from '../../models/run.model';
 
 @Component({
   selector: '[app-run-card-summary]',

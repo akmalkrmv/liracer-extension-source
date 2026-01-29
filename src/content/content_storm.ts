@@ -17,7 +17,7 @@ import {generateRandomUIDString} from '../shared/utils/random.util';
   const getText = (selector: string) => document.querySelector(selector)?.textContent || undefined;
   const getLinks = (selector: string) => [...document.querySelectorAll(selector)].map((a: Element) => (a as HTMLAnchorElement).href);
   const extractStats = (): number[] => [...document.querySelectorAll(SELECTORS.stats)].map((el: Element) => Number(el.textContent || 0));
-  const extractLastSegment = (href: string) => href.split('/').pop()!;
+  const extractLastSegment = (href: string) => href.split('/').filter(Boolean).pop()!;
 
   function collectPuzzles() {
     const solved: string[] = getLinks(SELECTORS.solvedRounds).map(extractLastSegment);

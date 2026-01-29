@@ -14,7 +14,7 @@ import { PuzzleLinks } from '../../puzzle-links/puzzle-links';
 import { IStorageAdapter, STORAGE_ADAPTER } from '../../services/storage';
 import { SettingsService } from '../../services/settings.service';
 import { RunCardSummary } from '../run-card-summary/run-card-summary';
-import { IRun } from '../run.model';
+import { IRun } from '../../models/run.model';
 
 type TOpenRaces = Record<string, boolean>;
 
